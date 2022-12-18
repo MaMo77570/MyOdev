@@ -10,15 +10,15 @@ namespace BookWeb.Controllers
     public class CategoryController1 : Controller
     {
 
-        private readonly  ICategoryRepository _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController1(ICategoryRepository db)
+        public CategoryController1(IUnitOfWork unitOfWork)
         {
-            _db = db;
+           _unitOfWork= unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.GetAll();
+            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
 
@@ -41,16 +41,13 @@ namespace BookWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Add(obj);
-                _db.Save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["Success"] = "Category Created Successfully"; 
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
-
-
-
 
         //Edit
         public IActionResult Edit(int? id)
@@ -61,7 +58,7 @@ namespace BookWeb.Controllers
             }
 
             //var categoryFormDb = _db.Categories.Find(id);
-            var categoryFromDbFirst = _db.GetFirstOrDefault(u => u.Name=="id");
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id==id);
 
             if (categoryFromDbFirst == null)
             {
@@ -83,8 +80,8 @@ namespace BookWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Update(obj);
-                _db.Save();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["Success"] = "Category Edited Successfully";
                 return RedirectToAction("Index");
             }
@@ -100,7 +97,7 @@ namespace BookWeb.Controllers
                 return NotFound();
             }
             //var categoryFormDbFirst = _db.Categories.Find(id);
-            var categoryFormDbFirst= _db.GetFirstOrDefault(u => u.Name == "id");
+            var categoryFormDbFirst= _unitOfWork.Category.GetFirstOrDefault(u => u.Id== id);
 
             if (categoryFormDbFirst == null)
             {
@@ -115,13 +112,13 @@ namespace BookWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.GetFirstOrDefault(u => u.Name == "id");
+            var obj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id== id);
             if (id == null)
             {
                 return NotFound();
             }
-            _db.Remove(obj);   // maybe we should remove Remove(obj)
-                _db.Save();
+            _unitOfWork.Category.Remove(obj);   // maybe we should remove Remove(obj)
+            _unitOfWork.Save();
             TempData["Success"] = "Category Deleted Successfully";
             return RedirectToAction("Index");
             
