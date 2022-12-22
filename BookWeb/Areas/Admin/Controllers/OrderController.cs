@@ -12,7 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
-{
+{    //Admin area 
     [Area("Admin")]
     [Authorize]
     public class OrderController : Controller
@@ -54,7 +54,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             {
                 PaymentMethodTypes = new List<string>
                 {
-                  "card",
+                  "card",     //cart islemleri
                 },
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
