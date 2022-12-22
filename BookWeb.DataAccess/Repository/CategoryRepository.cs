@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Book.DataAccess.Repository.IRepository;
 
 namespace Book.DataAccess.Repository
 {
@@ -17,14 +16,16 @@ namespace Book.DataAccess.Repository
             _db = db;
         }
 
-        //public void Save()
-        //{
-        //    _db.SaveChanges();
-        //}
-
         public void Update(Category obj)
         {
-            _db.Categories.Update(obj);
+            _db.Categories.Update(obj); // it should be _unitOfWork.Category.Update(obj);
+        }
+
+
+        //this is an extra method
+        object ICategoryRepository.FirstOrDefault(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Book.DataAccess.Repository.IRepository
 {
-    public interface ICategoryRepository : IRepository<Category> // it should be CategoryController1
+    public interface ICoverTypeRepository : IRepository<CoverType>
     {
-        object FirstOrDefault(Func<object, bool> value);
-        void Update(Category obj);
+        void Update(CoverType obj);
         //void Save();
     }
 }
