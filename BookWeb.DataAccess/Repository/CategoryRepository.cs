@@ -19,6 +19,8 @@ namespace Book.DataAccess.Repository
         public void Update(Category obj)
         {
             _db.Categories.Update(obj); // it should be _unitOfWork.Category.Update(obj);
+
+            _db.Categories.Update(obj); // i repeate the same line , 
         }
 
 

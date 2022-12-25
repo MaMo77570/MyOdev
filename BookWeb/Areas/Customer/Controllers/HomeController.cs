@@ -11,6 +11,8 @@ namespace BookWeb.Areas.Customer.Controllers;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+
+        return View();
         }
 
         public IActionResult Index()
